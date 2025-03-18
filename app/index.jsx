@@ -1,43 +1,56 @@
+import { useState } from "react";
 import { Text, View, StyleSheet,Image, Pressable } from "react-native";
+import { FokusButton } from "../components/FokusButton";
+import { ActionButton } from "../components/ActionButton";
+import { Timer } from "../components/Timer";
+
+const pomodoro = [
+  {
+    id:'focus',
+    initialValue: 25,
+    image: require('../assets/images/pomodoro.png'),
+    display:'Focus'
+  },
+  {
+    id:'short',
+    initialValue: 5,
+    image: require('../assets/images/short.png'),
+    display:'Short break'
+  }, 
+  {
+    id:'long',
+    initialValue: 15,
+    image: require('../assets/images/long.png'),
+    display:'Long break'
+  }
+]
 
 export default function Index() {
+
+  const [timerType, setTimerType] = useState(pomodoro[0])
+
   return (
     <View
       style={styles.container}>
-        <Image source={require('../assets/images/pomodoro.png')}/>
+        <Image source={timerType.image}/>
         <View style={styles.actions}>
           <View style={styles.content}>
-            <Pressable style={styles.contextButton}>
-              <Text style={styles.contextButtonText}>
-                Foco
-              </Text>
-            </Pressable>
-            <Pressable style={styles.contextButton}>
-            <Text style={styles.contextButtonText}>
-                Pausa curta
-              </Text>
-            </Pressable>
-            <Pressable style={styles.contextButton}>
-              <Text style={styles.contextButtonText}>
-                Pausa longa
-              </Text>
-            </Pressable>
+            {pomodoro.map(p => (
+              <ActionButton 
+                key={p.id}
+                active={timerType.id === p.id}
+                onPress={() => setTimerType(p)}
+                display={p.display}
+              />
+            ))}
+
           </View>
-          <Text style={styles.timer}>
-            25:00
-          </Text>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>
-              Começar
-            </Text>
-          </Pressable>
+          <Timer totalSeconds={timerType.initialValue}/>
+          <FokusButton/>
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            Projeto fictício e sem fins comerciais.
-          </Text>
-          <Text style={styles.footerText}>
-            Desenvolvido por Alura.
+            Non-profit project.
           </Text>
         </View>
     </View>
@@ -57,12 +70,7 @@ const styles = StyleSheet.create({
     justifyContent:'space-around',
     alignItems:'center'
   },
-  timer: {
-    color:'#fff',
-    fontSize:60,
-    fontWeight:'bold',
-    textAlign: 'center'
-  },
+
   actions: {
     paddingVertical:24,
     paddingHorizontal:24,
@@ -73,16 +81,6 @@ const styles = StyleSheet.create({
     borderColor:'#144480',
     gap:32
   },
-  button: {
-    backgroundColor: '#B872FF',
-    padding:8,
-    borderRadius:32
-  },
-  buttonText: {
-    textAlign:'center',
-    fontSize:18,
-    color:'#021123'
-  },
   footer: {
     width:'80%',
   },
@@ -90,14 +88,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
     color:'#98A0A8',
     fontSize:12.5
-  },
-  contextButtonText: {
-    fontSize:12.5,
-    color:'#FFF',
-    padding:8
-  },
-  contextButton: {
-    backgroundColor:'#144480',
-    borderRadius:8
   }
 })
