@@ -65,7 +65,6 @@ export default function Index() {
     timerRef.current = id
   }
 
-
   return (
     <View
       style={styles.container}>
@@ -80,11 +79,10 @@ export default function Index() {
                 display={p.display}
               />
             ))}
-
           </View>
           <Timer totalSeconds={seconds}/>
           <FokusButton 
-            title={timerRef.current ? 'Stop' : 'Start'}
+            title={timerRunning ? 'Stop' : 'Start'}
             onPress={toggleTimer}/>
         </View>
         <View style={styles.footer}>

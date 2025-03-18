@@ -16,7 +16,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#B872FF',
     padding:8,
-    borderRadius:32
+    borderRadius:32,
+    flexDirection:'row',
+    gap:12,
+    alignItems:'center',
+    justifyContent:'center'  
   },
   buttonText: {
     textAlign:'center',
